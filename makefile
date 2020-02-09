@@ -13,14 +13,17 @@ EXE = audio
 
 all: $(EXE)
 
-$(EXE): bin/main.o bin/audio.o 
+$(EXE): bin/main.o bin/audio.o bin/adsr_synth.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 	@cowsay "Built All The Things!!!"
 
 bin/audio.o: src/audio.cpp src/audio.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-bin/main.o: src/main.cpp src/audio.h
+bin/adsr_synth.o: src/adsr_synth.cpp src/adsr_synth.h src/audio.h
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+bin/main.o: src/main.cpp src/audio.h src/adsr_synth.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:
