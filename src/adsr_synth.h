@@ -7,7 +7,7 @@ enum class Waveform { SINE, SQUARE, SAW, TRI, NOISE };
 
 class ADSRSynth : public Generator {
    public:
-	ADSRSynth(Waveform w, int a, int d, int s, int r);
+	ADSRSynth(Waveform w, double freq, int a, int d, int s, int r);
 	~ADSRSynth();
 
 	void init(uint32_t sampleFreq);
@@ -18,6 +18,10 @@ class ADSRSynth : public Generator {
 
    private:
 	uint32_t m_sampleFreq;
+	double m_freq;
+	int m_adsr[4];
+	double m_pos;
+	double m_inc;
 };
 
 #endif /* ADSR_SYNTH_H */
