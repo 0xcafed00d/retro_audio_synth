@@ -75,11 +75,11 @@ void AUDIO_Shutdown() {
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
-void AUDIO_Play(int chan, Generator* gen) {
+void AUDIO_Play(int chan, Generator* gen, int amplitude) {
 	Channel ci;
 	ci.gen = gen;
 	ci.playing = true;
-	gen->init(22050);
+	gen->init(22050, amplitude);
 
 	SDL_LockAudioDevice(audioDevice);
 	channels[chan] = ci;

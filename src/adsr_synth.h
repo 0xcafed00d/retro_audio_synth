@@ -10,7 +10,7 @@ class ADSRSynth : public Generator {
 	ADSRSynth(Waveform w, double freq, int a, int d, int s, int r);
 	~ADSRSynth();
 
-	void init(uint32_t sampleFreq);
+	void init(uint32_t sampleFreq, int amplitude);
 
 	int16_t next();
 	void release();
@@ -18,10 +18,16 @@ class ADSRSynth : public Generator {
 
    private:
 	uint32_t m_sampleFreq;
+	uint32_t m_sampleCount;
 	double m_freq;
-	int m_adsr[4];
 	double m_pos;
 	double m_inc;
+	double m_amplitude;
+
+	int m_adsr[4];
+	double m_adsrRates[4];
+	uint32_t m_adsrCounts[4];
+	uint32_t m_adsrStage;
 };
 
 #endif /* ADSR_SYNTH_H */

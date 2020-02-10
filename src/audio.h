@@ -9,8 +9,9 @@ struct audio_exception : public std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
+// interface to a waveform generator
 struct Generator {
-	virtual void init(uint32_t sample_freq) = 0;
+	virtual void init(uint32_t sample_freq, int amplitude) = 0;
 	virtual int16_t next() = 0;
 	virtual void release() = 0;
 	virtual bool done() = 0;
@@ -21,7 +22,7 @@ struct Generator {
 void AUDIO_Init();
 void AUDIO_Shutdown();
 
-void AUDIO_Play(int chan, Generator* gen);
+void AUDIO_Play(int chan, Generator* gen, int amplitude);
 void AUDIO_Release(int chan);
 void AUDIO_Stop(int chan);
 bool AUDIO_isPlaying(int chan);
