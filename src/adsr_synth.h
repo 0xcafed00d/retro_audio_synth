@@ -28,6 +28,9 @@ class ADSRSynth : public Generator {
 	double m_adsrRates[4];
 	uint32_t m_adsrCounts[4];
 	uint32_t m_adsrStage;
+	double m_adsrAmplitude;
+	double m_sustainAmplitude;
+	bool m_done;
 };
 
 #endif /* ADSR_SYNTH_H */

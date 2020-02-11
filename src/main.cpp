@@ -9,7 +9,7 @@ int main(void) {
 	try {
 		AUDIO_Init();
 
-		ADSRSynth gen(Waveform::SINE, 440 / 4, 1, 2, 3, 4);
+		ADSRSynth gen(Waveform::SINE, 440, 200, 500, 20, 200);
 
 		AUDIO_Play(0, &gen, 100);
 		SDL_Delay(1000);
