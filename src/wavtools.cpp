@@ -5,18 +5,18 @@
 
 struct WavfileHeader {
 	char riffTag[4] = {'R', 'I', 'F', 'F'};
-	int riffLen = 0;
+	int32_t riffLen = 0;
 	char waveTag[4] = {'W', 'A', 'V', 'E'};
 	char fmtTag[4] = {'f', 'm', 't', ' '};
-	int fmtLen = 16;
-	short audioFormat = 1;
-	short numChannels = 1;
-	int sampleRate = 22050;
-	int byteRate = 44100;
-	short blockAlign = 2;
-	short bitsPerSample = 16;
+	int32_t fmtLen = 16;
+	int16_t audioFormat = 1;
+	int16_t numChannels = 1;
+	int32_t sampleRate = 22050;
+	int32_t byteRate = 44100;
+	int16_t blockAlign = 2;
+	int16_t bitsPerSample = 16;
 	char dataTag[4] = {'d', 'a', 't', 'a'};
-	int dataLength = 0;
+	int32_t dataLength = 0;
 };
 
 bool saveWav(const char* name, Generator* gen, int sampleFreq, int amplitude, int releasems) {
