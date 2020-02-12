@@ -3,6 +3,6 @@
 
 #include "audio.h"
 
-bool saveWav(const char* name, Generator* gen, int sampleFreq, int amplitude, int releasems);
+bool saveWav(const char* name, SampleSource* gen, int sampleFreq, int amplitude, int releasems);
 
 #endif /* WAVTOOLS_H */

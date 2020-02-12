@@ -2,8 +2,9 @@
 
 #include <math.h>
 
-ADSRSynth::ADSRSynth(Waveform w, double freq, int a, int d, int s, int r)
-    : m_freq(freq), m_adsr{a, d, s, r} {
+#include <algorithm>
+
+ADSRSynth::ADSRSynth(double freq, int a, int d, int s, int r) : m_freq(freq), m_adsr{a, d, s, r} {
 }
 
 ADSRSynth::~ADSRSynth() {
@@ -31,8 +32,8 @@ void ADSRSynth::init(uint32_t sampleFreq, int amplitude) {
 	m_adsrRates[3] = m_sustainAmplitude / m_adsrCounts[3];
 }
 
-int16_t ADSRSynth::next() {
-	auto s = sin(m_pos) * 32000 * std::max(0.0, std::min(m_amplitude * m_adsrAmplitude, 1.0));
+double ADSRSynth::next() {
+	double s = sin(m_pos) * clamp(m_amplitude * m_adsrAmplitude);
 	m_pos += m_inc;
 
 	if (m_adsrStage == 0) {
@@ -54,7 +55,7 @@ int16_t ADSRSynth::next() {
 		}
 	}
 	m_sampleCount++;
-	return int16_t(s);
+	return s;
 }
 
 void ADSRSynth::release() {

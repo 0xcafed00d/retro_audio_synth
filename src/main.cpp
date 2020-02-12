@@ -4,17 +4,20 @@
 
 #include "adsr_synth.h"
 #include "audio.h"
+#include "wave_synth.h"
 #include "wavtools.h"
 
 int main(void) {
 	try {
 		AUDIO_Init();
 
-		ADSRSynth gen(Waveform::SINE, 440, 200, 500, 20, 200);
+		SineWaveSyth source(440);
+		ADSRSynth envelope(440, 200, 500, 20, 200);
+		envelope.connect(ConnectionPoint::SOURCE, &source);
 
-		saveWav("test.wav", &gen, 22050, 100, 1000);
+		saveWav("test.wav", &envelope, 22050, 100, 1000);
 
-		AUDIO_Play(0, &gen, 100);
+		AUDIO_Play(0, &envelope, 100);
 		SDL_Delay(1000);
 		AUDIO_Release(0);
 		SDL_Delay(1000);

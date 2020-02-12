@@ -12,7 +12,7 @@
 static const int NUM_CHANNELS = 4;
 
 struct Channel {
-	Generator* gen = nullptr;
+	SampleSource* gen = nullptr;
 	bool playing = false;
 };
 
@@ -24,7 +24,7 @@ static void throw_error(std::string msg) {
 	throw(audio_exception(msg));
 }
 
-inline int16_t clamp(int32_t s) {
+inline int16_t clamp16(int32_t s) {
 	if (s < INT16_MIN)
 		return INT16_MIN;
 	if (s > INT16_MAX)
@@ -39,14 +39,14 @@ static void callback(void* userdata, uint8_t* stream, int len) {
 		int32_t sum = 0;
 		for (int n = 0; n < NUM_CHANNELS; n++) {
 			if (channels[n].playing) {
-				sum += channels[n].gen->next() / 2;
+				sum += int16_t(channels[n].gen->next() * 32000) / 2;
 				if (channels[n].gen->done()) {
 					channels[n].playing = false;
 					channels[n].gen = nullptr;
 				}
 			}
 		}
-		*stream16++ = clamp(sum);
+		*stream16++ = clamp16(sum);
 	}
 }
 
@@ -75,7 +75,7 @@ void AUDIO_Shutdown() {
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
-void AUDIO_Play(int chan, Generator* gen, int amplitude) {
+void AUDIO_Play(int chan, SampleSource* gen, int amplitude) {
 	Channel ci;
 	ci.gen = gen;
 	ci.playing = true;

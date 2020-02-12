@@ -19,7 +19,7 @@ struct WavfileHeader {
 	int32_t dataLength = 0;
 };
 
-bool saveWav(const char* name, Generator* gen, int sampleFreq, int amplitude, int releasems) {
+bool saveWav(const char* name, SampleSource* gen, int sampleFreq, int amplitude, int releasems) {
 	FILE* f = fopen(name, "wb+");
 	if (!f) {
 		return false;
@@ -43,7 +43,7 @@ bool saveWav(const char* name, Generator* gen, int sampleFreq, int amplitude, in
 		if (sampleCount == releaseAt) {
 			gen->release();
 		}
-		auto s = gen->next();
+		int16_t s = int16_t(gen->next() * 32000);
 		if (fwrite(&s, sizeof(s), 1, f) == 0) {
 			fclose(f);
 			return false;

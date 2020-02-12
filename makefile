@@ -13,20 +13,23 @@ EXE = audio
 
 all: $(EXE)
 
-$(EXE): bin/main.o bin/audio.o bin/adsr_synth.o bin/wavtools.o
+$(EXE): bin/main.o bin/audio.o bin/wavtools.o bin/adsr_synth.o  bin/wave_synth.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 	@cowsay "Built All The Things!!!"
 
 bin/audio.o: src/audio.cpp src/audio.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-bin/adsr_synth.o: src/adsr_synth.cpp src/adsr_synth.h src/audio.h
+bin/adsr_synth.o: src/adsr_synth.cpp src/adsr_synth.h src/sample_source.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-bin/wavtools.o: src/wavtools.cpp src/wavtools.h src/audio.h
+bin/wave_synth.o: src/wave_synth.cpp src/wave_synth.h src/sample_source.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-bin/main.o: src/main.cpp src/audio.h src/adsr_synth.h src/wavtools.h
+bin/wavtools.o: src/wavtools.cpp src/wavtools.h src/sample_source.h
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+bin/main.o: src/main.cpp src/audio.h src/adsr_synth.h src/wave_synth.h src/wavtools.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 clean:

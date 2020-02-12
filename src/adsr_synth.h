@@ -1,18 +1,16 @@
 #ifndef ADSR_SYNTH_H
 #define ADSR_SYNTH_H
 
-#include "audio.h"
+#include "sample_source.h"
 
-enum class Waveform { SINE, SQUARE, SAW, TRI, NOISE };
-
-class ADSRSynth : public Generator {
+class ADSRSynth : public SampleSource {
    public:
-	ADSRSynth(Waveform w, double freq, int a, int d, int s, int r);
+	ADSRSynth(double freq, int a, int d, int s, int r);
 	~ADSRSynth();
 
 	void init(uint32_t sampleFreq, int amplitude);
 
-	int16_t next();
+	double next();
 	void release();
 	bool done();
 
