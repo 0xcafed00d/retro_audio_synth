@@ -12,10 +12,10 @@ int main(void) {
 		AUDIO_Init();
 
 		SineWaveSyth source(440);
-		ADSRSynth envelope(440, 200, 500, 20, 200);
+		ADSRSynth envelope(200, 500, 20, 200);
 		envelope.connect(ConnectionPoint::SOURCE, &source);
 
-		saveWav("test.wav", &envelope, 22050, 100, 1000);
+		saveWav("test.wav", &source, 22050, 100, 1000);
 
 		AUDIO_Play(0, &envelope, 100);
 		SDL_Delay(1000);

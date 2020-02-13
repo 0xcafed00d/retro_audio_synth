@@ -4,16 +4,24 @@
 
 #include <algorithm>
 
-ADSRSynth::ADSRSynth(double freq, int a, int d, int s, int r) : m_freq(freq), m_adsr{a, d, s, r} {
+ADSRSynth::ADSRSynth(int a, int d, int s, int r) : m_adsr{a, d, s, r}, m_source(nullptr) {
 }
 
 ADSRSynth::~ADSRSynth() {
 }
 
+void ADSRSynth::connect(ConnectionPoint c, SampleSource* s) {
+	if (c == ConnectionPoint::SOURCE) {
+		m_source = s;
+	}
+}
+
 void ADSRSynth::init(uint32_t sampleFreq, int amplitude) {
+	if (m_source) {
+		m_source->init(sampleFreq, 100);
+	}
+
 	m_sampleFreq = sampleFreq;
-	m_pos = 0;
-	m_inc = (M_PI * 2) / (double(m_sampleFreq) / m_freq);
 	m_amplitude = double(amplitude) / 100.0;
 	m_sampleCount = 0;
 	m_adsrStage = 0;
@@ -33,8 +41,11 @@ void ADSRSynth::init(uint32_t sampleFreq, int amplitude) {
 }
 
 double ADSRSynth::next() {
-	double s = sin(m_pos) * clamp(m_amplitude * m_adsrAmplitude);
-	m_pos += m_inc;
+	if (!m_source) {
+		return 0;
+	}
+
+	double s = m_source->next() * clamp(m_amplitude * m_adsrAmplitude);
 
 	if (m_adsrStage == 0) {
 		m_adsrAmplitude += m_adsrRates[0];

@@ -5,9 +5,10 @@
 
 class ADSRSynth : public SampleSource {
    public:
-	ADSRSynth(double freq, int a, int d, int s, int r);
+	ADSRSynth(int a, int d, int s, int r);
 	~ADSRSynth();
 
+	void connect(ConnectionPoint c, SampleSource* s);
 	void init(uint32_t sampleFreq, int amplitude);
 
 	double next();
@@ -17,9 +18,6 @@ class ADSRSynth : public SampleSource {
    private:
 	uint32_t m_sampleFreq;
 	uint32_t m_sampleCount;
-	double m_freq;
-	double m_pos;
-	double m_inc;
 	double m_amplitude;
 
 	int m_adsr[4];
@@ -29,6 +27,8 @@ class ADSRSynth : public SampleSource {
 	double m_adsrAmplitude;
 	double m_sustainAmplitude;
 	bool m_done;
+
+	SampleSource* m_source;
 };
 
 #endif /* ADSR_SYNTH_H */

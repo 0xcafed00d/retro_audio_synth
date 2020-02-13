@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-enum class ConnectionPoint { SOURCE, TREMOLO, VIBRATO };
+enum class ConnectionPoint { SOURCE, AMP_MODULATE, FREQ_MODULATE };
 
 // interface to a waveform Sample Source
 struct SampleSource {

@@ -14,14 +14,12 @@ void SineWaveSyth::init(uint32_t sampleFreq, int amplitude) {
 	m_pos = 0;
 	m_inc = (M_PI * 2) / (double(m_sampleFreq) / m_freq);
 	m_amplitude = double(amplitude) / 100.0;
-	m_sampleCount = 0;
 	m_done = false;
 }
 
 double SineWaveSyth::next() {
 	double s = sin(m_pos) * m_amplitude;
 	m_pos += m_inc;
-	m_sampleCount++;
 	return s;
 }
 
