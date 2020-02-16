@@ -11,7 +11,7 @@ int main(void) {
 	try {
 		AUDIO_Init();
 
-		SineWaveSyth source(440);
+		SineWaveSynth source(440);
 		ADSRSynth envelope(200, 500, 20, 200);
 		envelope.connect(ConnectionPoint::SOURCE, &source);
 
