@@ -95,11 +95,7 @@ class NoiseWaveSyth : public SampleSource {
 	bool done();
 
    private:
-	uint32_t m_sampleFreq;
 	uint32_t m_rngstate;
-	double m_freq;
-	double m_pos;
-	double m_inc;
 	double m_amplitude;
 	bool m_done;
 };

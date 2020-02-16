@@ -134,16 +134,13 @@ bool SawtoothWaveSyth::done() {
 
 // ------------------------------------------------------------------
 
-NoiseWaveSyth::NoiseWaveSyth(double freq) : m_freq(freq) {
+NoiseWaveSyth::NoiseWaveSyth(double freq) {
 }
 
 NoiseWaveSyth::~NoiseWaveSyth() {
 }
 
 void NoiseWaveSyth::init(uint32_t sampleFreq, int amplitude) {
-	m_sampleFreq = sampleFreq;
-	m_pos = 0;
-	m_inc = 1.0 / (double(m_sampleFreq) / m_freq);
 	m_amplitude = double(amplitude) / 100.0;
 	m_done = false;
 	m_rngstate = 12345;
