@@ -13,7 +13,7 @@ EXE = audio
 
 all: $(EXE)
 
-$(EXE): bin/main.o bin/audio.o bin/wavtools.o bin/adsr_synth.o  bin/wave_synth.o
+$(EXE): bin/main.o bin/audio.o bin/wavtools.o bin/adsr_synth.o  bin/wave_synth.o bin/midi_tools.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 	@cowsay "Built All The Things!!!"
 
@@ -27,6 +27,9 @@ bin/wave_synth.o: src/wave_synth.cpp src/wave_synth.h src/sample_source.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 bin/wavtools.o: src/wavtools.cpp src/wavtools.h src/sample_source.h
+	$(CXX) $(CXXFLAGS) $< -o $@
+
+bin/midi_tools.o: src/midi_tools.cpp src/midi_tools.h
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 bin/main.o: src/main.cpp src/audio.h src/adsr_synth.h src/wave_synth.h src/wavtools.h
