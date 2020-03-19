@@ -25,6 +25,9 @@ class WaveSynth : public SampleSource {
 	double next() {
 		double s = gens::genf(m_pos) * m_amplitude;
 		m_pos += m_inc;
+		if (m_pos > 1.0) {
+			m_pos -= 1.0;
+		}
 		return s;
 	}
 
@@ -69,7 +72,7 @@ struct tri_genf {
 };
 
 typedef WaveSynth<sine_genf> SineWaveSynth;
-typedef WaveSynth<square_genf> SqaureWaveSynth;
+typedef WaveSynth<square_genf> SquareWaveSynth;
 typedef WaveSynth<saw_genf> SawWaveSynth;
 typedef WaveSynth<tri_genf> TriangleWaveSynth;
 
